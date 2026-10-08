@@ -45,12 +45,16 @@ const agency = {
   name: "Ali Property Dealers",
   city: "Islamabad",
   years: 5,
-  phone: "Phone number coming soon",
+  phone: "+92 317 582104",
+  whatsapp: "92317582104",
+  whatsappMessage: "Hello! I found your website and I'm interested in a property.",
   address: "Office address coming soon",
   landmark: "Landmark coming soon",
   maps: "",
   hours: "Office hours coming soon",
 };
+
+const whatsappUrl = `https://wa.me/${agency.whatsapp}?text=${encodeURIComponent(agency.whatsappMessage)}`;
 
 const listings = [
   { name: "10 Marla House", area: "DHA Phase 5", size: "10 Marla", beds: 4, baths: 4, price: "PKR 4.5 Crore", status: "Ready", type: "House", image: houseLargeImage },
@@ -100,7 +104,7 @@ function Index() {
           <nav className="hidden items-center gap-7 md:flex" aria-label="Main navigation">
             {nav.map(([label, href]) => <a key={href} href={href} className="text-sm font-medium text-primary-foreground/80 hover:text-gold">{label}</a>)}
           </nav>
-          <div className="hidden md:block"><Button variant="gold" onClick={() => setChatOpen(true)}><MessageCircle size={18} />WhatsApp Us</Button></div>
+          <div className="hidden md:block"><Button variant="gold" asChild><a href={whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} />WhatsApp Us</a></Button></div>
           <Button variant="ghost" size="icon" className="text-primary-foreground md:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">{menuOpen ? <X /> : <Menu />}</Button>
         </div>
         {menuOpen && <nav className="border-t border-hero-foreground/10 bg-primary px-5 py-4 md:hidden">{nav.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)} className="block min-h-11 py-3 font-medium">{label}</a>)}</nav>}
