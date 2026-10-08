@@ -45,12 +45,16 @@ const agency = {
   name: "Ali Property Dealers",
   city: "Islamabad",
   years: 5,
-  phone: "Phone number coming soon",
+  phone: "+92 317 582104",
+  whatsapp: "92317582104",
+  whatsappMessage: "Hello! I found your website and I'm interested in a property.",
   address: "Office address coming soon",
   landmark: "Landmark coming soon",
   maps: "",
   hours: "Office hours coming soon",
 };
+
+const whatsappUrl = `https://wa.me/${agency.whatsapp}?text=${encodeURIComponent(agency.whatsappMessage)}`;
 
 const listings = [
   { name: "10 Marla House", area: "DHA Phase 5", size: "10 Marla", beds: 4, baths: 4, price: "PKR 4.5 Crore", status: "Ready", type: "House", image: houseLargeImage },
@@ -84,6 +88,7 @@ function Index() {
     else if (/area|location|dha|bahria|gulberg|f-1|g-1|e-11/.test(lower)) reply = "Ji, DHA, Bahria Town, Gulberg aur selected Islamabad sectors mein options hain. Buy ya rent chahte hain?";
     else if (/list|house|flat|plot|shop|apartment|property/.test(lower)) reply = "Available sample listings upar Featured Listings mein hain. Apna area aur budget batayein, main matching options bata doon?";
     else if (/office|address|map/.test(lower)) reply = "Office address aur map pin abhi update hona baqi hai. Aap property area batayein, main available options share karta hoon.";
+    else if (/number|phone|call|whatsapp/.test(lower)) reply = `Aap humein WhatsApp ya call ${agency.phone} par contact kar sakte hain, ya yahan apni requirement batayein.`;
     else if (/hello|hi|salam|assalam/.test(lower)) reply = "Wa-Alaikum-Salam! Buy, rent, plot, ya commercial — kis mein madad chahiye?";
     setMessages((current) => [...current, { from: "user", text: clean }, { from: "agent", text: reply }]);
     setMessage("");
@@ -100,7 +105,7 @@ function Index() {
           <nav className="hidden items-center gap-7 md:flex" aria-label="Main navigation">
             {nav.map(([label, href]) => <a key={href} href={href} className="text-sm font-medium text-primary-foreground/80 hover:text-gold">{label}</a>)}
           </nav>
-          <div className="hidden md:block"><Button variant="gold" onClick={() => setChatOpen(true)}><MessageCircle size={18} />WhatsApp Us</Button></div>
+          <div className="hidden md:block"><Button variant="gold" asChild><a href={whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} />WhatsApp Us</a></Button></div>
           <Button variant="ghost" size="icon" className="text-primary-foreground md:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">{menuOpen ? <X /> : <Menu />}</Button>
         </div>
         {menuOpen && <nav className="border-t border-hero-foreground/10 bg-primary px-5 py-4 md:hidden">{nav.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)} className="block min-h-11 py-3 font-medium">{label}</a>)}</nav>}
@@ -115,7 +120,7 @@ function Index() {
               <div className="mb-6 inline-flex items-center gap-2 border-l-2 border-gold pl-3 text-sm font-semibold uppercase text-gold">Islamabad property specialists</div>
               <h1 className="max-w-3xl text-4xl font-bold leading-[1.08] sm:text-6xl lg:text-7xl">Find Your Perfect Property in Islamabad</h1>
               <p className="mt-6 max-w-2xl text-lg leading-8 text-hero-foreground/80 sm:text-xl">Trusted property guidance for 5 years. Buy, sell, or rent houses, plots, apartments, and commercial spaces.</p>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row"><Button variant="gold" asChild><a href="#listings"><Search size={18} />View Listings</a></Button><Button variant="heroOutline" onClick={() => setChatOpen(true)}><MessageCircle size={18} />WhatsApp Us</Button></div>
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row"><Button variant="gold" asChild><a href="#listings"><Search size={18} />View Listings</a></Button><Button variant="heroOutline" asChild><a href={whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} />WhatsApp Us</a></Button></div>
             </div>
           </div>
         </section>
@@ -152,7 +157,7 @@ function Index() {
 
         <section id="about" className="mx-auto grid max-w-7xl gap-12 px-5 py-20 lg:grid-cols-2 lg:px-8 lg:py-28"><div><div className="text-sm font-bold uppercase text-gold">About us</div><h2 className="mt-3 text-3xl font-bold leading-tight sm:text-4xl">Five Years of Local Property Experience</h2></div><div><p className="text-lg leading-8 text-muted-foreground">Ali Property Dealers has been serving Islamabad for 5 years. We help families and investors buy, sell, and rent properties with honesty and transparency. From residential homes to commercial spaces, every inquiry is handled with care.</p><div className="mt-8 flex items-center gap-4 border-l-2 border-gold pl-5"><MapPin className="shrink-0 text-gold"/><p className="font-semibold">Islamabad, Pakistan</p></div></div></section>
 
-        <section id="contact" className="bg-primary py-20 text-primary-foreground lg:py-24"><div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2 lg:px-8"><div><div className="text-sm font-bold uppercase text-gold">Get in touch</div><h2 className="mt-3 text-3xl font-bold sm:text-4xl">Let’s Discuss Your Property Needs</h2><p className="mt-5 max-w-lg leading-7 text-primary-foreground/65">Tell us what you are looking for and we’ll guide you toward suitable options and the next step.</p><Button variant="gold" className="mt-8" onClick={() => setChatOpen(true)}><MessageCircle size={18}/>Start a Conversation</Button></div><div className="grid gap-4 sm:grid-cols-2">{[[Phone,"Phone / WhatsApp",agency.phone],[MapPin,"Office",agency.address],[MapPin,"Landmark",agency.landmark],[Clock3,"Office Hours",agency.hours]].map(([Icon,label,value]) => { const I=Icon as typeof Phone; return <div key={label as string} className="border border-hero-foreground/10 bg-navy-soft p-5"><I className="text-gold" size={21}/><div className="mt-4 text-xs uppercase text-primary-foreground/50">{label as string}</div><div className="mt-1 text-sm font-semibold">{value as string}</div></div>; })}</div></div></section>
+        <section id="contact" className="bg-primary py-20 text-primary-foreground lg:py-24"><div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2 lg:px-8"><div><div className="text-sm font-bold uppercase text-gold">Get in touch</div><h2 className="mt-3 text-3xl font-bold sm:text-4xl">Let’s Discuss Your Property Needs</h2><p className="mt-5 max-w-lg leading-7 text-primary-foreground/65">Tell us what you are looking for and we’ll guide you toward suitable options and the next step.</p><Button variant="gold" className="mt-8" onClick={() => setChatOpen(true)}><MessageCircle size={18}/>Start a Conversation</Button></div><div className="grid gap-4 sm:grid-cols-2">{[[Phone,"Phone / WhatsApp",agency.phone,`tel:${agency.phone.replace(/[^+\d]/g,"")}`],[MapPin,"Office",agency.address,null],[MapPin,"Landmark",agency.landmark,null],[Clock3,"Office Hours",agency.hours,null]].map(([Icon,label,value,href]) => { const I=Icon as typeof Phone; const content = <><I className="text-gold" size={21}/><div className="mt-4 text-xs uppercase text-primary-foreground/50">{label as string}</div><div className="mt-1 text-sm font-semibold">{value as string}</div></>; return href ? <a key={label as string} href={href as string} className="block border border-hero-foreground/10 bg-navy-soft p-5 transition-colors hover:border-gold/50">{content}</a> : <div key={label as string} className="border border-hero-foreground/10 bg-navy-soft p-5">{content}</div>; })}</div></div></section>
       </main>
 
       <footer className="bg-primary text-primary-foreground"><div className="mx-auto flex max-w-7xl flex-col gap-5 border-t border-hero-foreground/10 px-5 py-8 text-sm text-primary-foreground/55 sm:flex-row sm:items-center sm:justify-between lg:px-8"><span>© 2026 Ali Property Dealers. All rights reserved.</span><span>Islamabad, Pakistan</span></div></footer>
