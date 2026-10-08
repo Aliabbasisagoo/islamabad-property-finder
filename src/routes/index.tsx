@@ -88,7 +88,7 @@ function Index() {
     else if (/area|location|dha|bahria|gulberg|f-1|g-1|e-11/.test(lower)) reply = "Ji, DHA, Bahria Town, Gulberg aur selected Islamabad sectors mein options hain. Buy ya rent chahte hain?";
     else if (/list|house|flat|plot|shop|apartment|property/.test(lower)) reply = "Available sample listings upar Featured Listings mein hain. Apna area aur budget batayein, main matching options bata doon?";
     else if (/office|address|map/.test(lower)) reply = "Office address aur map pin abhi update hona baqi hai. Aap property area batayein, main available options share karta hoon.";
-    else if (/number|phone|call|whatsapp/.test(lower)) reply = `Aap humein WhatsApp ya call +${agency.phone.replace("+92 ", "92 ")} par contact kar sakte hain, ya yahan apni requirement batayein.`;
+    else if (/number|phone|call|whatsapp/.test(lower)) reply = `Aap humein WhatsApp ya call ${agency.phone} par contact kar sakte hain, ya yahan apni requirement batayein.`;
     else if (/hello|hi|salam|assalam/.test(lower)) reply = "Wa-Alaikum-Salam! Buy, rent, plot, ya commercial — kis mein madad chahiye?";
     setMessages((current) => [...current, { from: "user", text: clean }, { from: "agent", text: reply }]);
     setMessage("");
