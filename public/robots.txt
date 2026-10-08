@@ -12,3 +12,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://islamabad-property-finder.lovable.app/sitemap.xml
