@@ -119,7 +119,7 @@ function Index() {
               <div className="mb-6 inline-flex items-center gap-2 border-l-2 border-gold pl-3 text-sm font-semibold uppercase text-gold">Islamabad property specialists</div>
               <h1 className="max-w-3xl text-4xl font-bold leading-[1.08] sm:text-6xl lg:text-7xl">Find Your Perfect Property in Islamabad</h1>
               <p className="mt-6 max-w-2xl text-lg leading-8 text-hero-foreground/80 sm:text-xl">Trusted property guidance for 5 years. Buy, sell, or rent houses, plots, apartments, and commercial spaces.</p>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row"><Button variant="gold" asChild><a href="#listings"><Search size={18} />View Listings</a></Button><Button variant="heroOutline" onClick={() => setChatOpen(true)}><MessageCircle size={18} />WhatsApp Us</Button></div>
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row"><Button variant="gold" asChild><a href="#listings"><Search size={18} />View Listings</a></Button><Button variant="heroOutline" asChild><a href={whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} />WhatsApp Us</a></Button></div>
             </div>
           </div>
         </section>
