@@ -51,7 +51,7 @@ const agency = {
   address: "Office address coming soon",
   landmark: "Landmark coming soon",
   maps: "",
-  hours: "Office hours coming soon",
+  hours: "10 AM – 5 PM",
 };
 
 const whatsappUrl = `https://wa.me/${agency.whatsapp}?text=${encodeURIComponent(agency.whatsappMessage)}`;
