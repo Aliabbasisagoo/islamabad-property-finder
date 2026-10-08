@@ -78,9 +78,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Ali Property Dealers" },
+      { title: "Ali Property Dealers — Real Estate Agency in Islamabad" },
       { name: "description", content: "Property guidance for Islamabad buyers, sellers, and renters." },
       { name: "author", content: "Ali Property Dealers" },
+      { property: "og:title", content: "Ali Property Dealers — Real Estate Agency in Islamabad" },
+      { property: "og:description", content: "Buy, sell, or rent houses, plots, and apartments in Islamabad with 5 years of local experience." },
+      { property: "og:site_name", content: "Ali Property Dealers" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
