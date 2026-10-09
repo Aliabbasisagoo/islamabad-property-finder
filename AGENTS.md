@@ -10,3 +10,5 @@
 <!-- LOVABLE:END -->
 
 - Keep all public business contact details in the single `agency` configuration object so placeholders can be replaced safely; this prevents inconsistent phone, map, and address details.
+- Business contact details live in `src/lib/agency.ts` and feed both the page and the assistant's instructions; one source keeps them consistent.
+- The chat assistant streams from the server route `/api/chat` via Lovable AI; conversation is kept in sessionStorage so each browser session starts fresh.

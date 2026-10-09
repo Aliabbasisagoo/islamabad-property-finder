@@ -17,7 +17,7 @@ import {
   Users,
   X,
 } from "lucide-react";
-import { FormEvent, useMemo, useState } from "react";
+import { useState } from "react";
 
 import apartmentImage from "@/assets/apartment.jpg";
 import commercialImage from "@/assets/commercial-shop.jpg";
@@ -25,7 +25,9 @@ import heroImage from "@/assets/islamabad-hero.jpg";
 import houseLargeImage from "@/assets/house-10-marla.jpg";
 import houseSmallImage from "@/assets/house-5-marla.jpg";
 import plotImage from "@/assets/plot.jpg";
+import { ChatWidget } from "@/components/ChatWidget";
 import { Button } from "@/components/ui/button";
+import { agency, whatsappUrl } from "@/lib/agency";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -41,21 +43,6 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const agency = {
-  name: "Ali Property Dealers",
-  city: "Islamabad",
-  years: 5,
-  phone: "+92 317 582104",
-  whatsapp: "92317582104",
-  whatsappMessage: "Hello! I found your website and I'm interested in a property.",
-  address: "Elysium Tower, Jinnah Avenue, Blue Area, Islamabad 44000",
-  landmark: "Blue Area, G-8/3",
-  maps: "https://www.google.com/maps/search/?api=1&query=Elysium%20Tower%2C%20Jinnah%20Avenue%2C%20Blue%20Area%2C%20Islamabad%2044000",
-  hours: "10 AM – 5 PM",
-};
-
-const whatsappUrl = `https://wa.me/${agency.whatsapp}?text=${encodeURIComponent(agency.whatsappMessage)}`;
-
 const listings = [
   { name: "10 Marla House", area: "DHA Phase 5", size: "10 Marla", beds: 4, baths: 4, price: "PKR 4.5 Crore", status: "Ready", type: "House", image: houseLargeImage },
   { name: "5 Marla House", area: "Bahria Town", size: "5 Marla", beds: 3, baths: 3, price: "PKR 2.1 Crore", status: "Ready", type: "House", image: houseSmallImage },
@@ -65,34 +52,12 @@ const listings = [
   { name: "3 Bed Apartment", area: "F-10", size: "3 Bed", beds: 3, baths: 3, price: "PKR 2.8 Crore", status: "Ready", type: "Apartment", image: apartmentImage },
 ];
 
-const areas = ["DHA", "Bahria Town", "Gulberg", "F-6", "F-7", "F-8", "F-10", "F-11", "G-11", "G-13", "E-11"];
+const areas = agency.areas;
 
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([{ from: "agent", text: "Assalam-o-Alaikum! Ali Property Dealers mein khush aamdeed 🏠 Buy, rent, plot, ya commercial — kis mein madad karoon?" }]);
-
-  const nav = useMemo(() => [
-    ["Home", "#home"], ["Listings", "#listings"], ["Areas", "#areas"], ["About", "#about"], ["Contact", "#contact"],
-  ], []);
-
-  const submitChat = (event: FormEvent) => {
-    event.preventDefault();
-    const clean = message.trim().slice(0, 300);
-    if (!clean) return;
-    const lower = clean.toLowerCase();
-    let reply = "Ji, main Islamabad mein property options ke liye madad kar sakta hoon. Buy karna hai ya rent?";
-    if (/legal|tax|loan|قرض/.test(lower)) reply = "Is mamlay mein professional advisor behtar guide karega. Main property listings, areas aur site visits mein madad kar sakta hoon.";
-    else if (/visit|dekh|booking/.test(lower)) reply = "Site visit arrange ho sakti hai. Kaunsi property, preferred day aur time batayein?";
-    else if (/area|location|dha|bahria|gulberg|f-1|g-1|e-11/.test(lower)) reply = "Ji, DHA, Bahria Town, Gulberg aur selected Islamabad sectors mein options hain. Buy ya rent chahte hain?";
-    else if (/list|house|flat|plot|shop|apartment|property/.test(lower)) reply = "Available sample listings upar Featured Listings mein hain. Apna area aur budget batayein, main matching options bata doon?";
-    else if (/office|address|map/.test(lower)) reply = `Humara office ${agency.address} par hai (opens ${agency.hours}). Contact section mein map link hai, ya main aap ke liye site visit arrange kar doon?`;
-    else if (/number|phone|call|whatsapp/.test(lower)) reply = `Aap humein WhatsApp ya call ${agency.phone} par contact kar sakte hain, ya yahan apni requirement batayein.`;
-    else if (/hello|hi|salam|assalam/.test(lower)) reply = "Wa-Alaikum-Salam! Buy, rent, plot, ya commercial — kis mein madad chahiye?";
-    setMessages((current) => [...current, { from: "user", text: clean }, { from: "agent", text: reply }]);
-    setMessage("");
-  };
+  const nav = [["Home", "#home"], ["Listings", "#listings"], ["Contact", "#contact"]];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -120,7 +85,7 @@ function Index() {
               <div className="mb-6 inline-flex items-center gap-2 border-l-2 border-gold pl-3 text-sm font-semibold uppercase text-gold">Islamabad property specialists</div>
               <h1 className="max-w-3xl text-4xl font-bold leading-[1.08] sm:text-6xl lg:text-7xl">Find Your Perfect Property in Islamabad</h1>
               <p className="mt-6 max-w-2xl text-lg leading-8 text-hero-foreground/80 sm:text-xl">Trusted property guidance for 5 years. Buy, sell, or rent houses, plots, apartments, and commercial spaces.</p>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row"><Button variant="gold" asChild><a href="#listings"><Search size={18} />View Listings</a></Button><Button variant="heroOutline" asChild><a href={whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} />WhatsApp Us</a></Button></div>
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row"><Button variant="gold" asChild><a href="#listings"><Search size={18} />View Listings</a></Button><Button variant="heroOutline" onClick={() => setChatOpen(true)}><MessageCircle size={18} />Chat with us</Button></div>
             </div>
           </div>
         </section>
@@ -136,7 +101,7 @@ function Index() {
           <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {listings.map((item) => <article key={item.name} className="group overflow-hidden rounded-md border border-border bg-card shadow-sm transition-shadow hover:shadow-lg">
               <div className="relative aspect-[3/2] overflow-hidden"><img src={item.image} alt={`${item.name} in ${item.area}`} width={1200} height={800} loading="lazy" className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" /><span className="absolute left-4 top-4 rounded-sm bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground">For Sale</span></div>
-              <div className="p-5"><div className="flex items-center justify-between gap-3"><span className="text-xs font-bold uppercase text-gold">{item.type}</span><span className="flex items-center gap-1 text-xs text-muted-foreground"><CheckCircle2 size={14} />{item.status}</span></div><h3 className="mt-3 text-xl font-semibold">{item.name}</h3><p className="mt-2 flex items-center gap-2 text-sm text-muted-foreground"><MapPin size={16} />{item.area} · {item.size}</p>{item.beds && <div className="mt-4 flex gap-5 border-y border-border py-3 text-sm text-muted-foreground"><span className="flex items-center gap-2"><BedDouble size={17} />{item.beds} Beds</span><span className="flex items-center gap-2"><Bath size={17} />{item.baths} Baths</span></div>}<div className="mt-5 flex items-center justify-between gap-3"><strong className="font-display text-lg text-primary">{item.price}</strong><Button variant="outline" size="icon" aria-label={`Inquire about ${item.name}`} onClick={() => setChatOpen(true)}><MessageCircle size={18} /></Button></div></div>
+              <div className="p-5"><div className="flex items-center justify-between gap-3"><span className="text-xs font-bold uppercase text-gold">{item.type}</span><span className="flex items-center gap-1 text-xs text-muted-foreground"><CheckCircle2 size={14} />{item.status}</span></div><h3 className="mt-3 text-xl font-semibold">{item.name}</h3><p className="mt-2 flex items-center gap-2 text-sm text-muted-foreground"><MapPin size={16} />{item.area} · {item.size}</p>{item.beds && <div className="mt-4 flex gap-5 border-y border-border py-3 text-sm text-muted-foreground"><span className="flex items-center gap-2"><BedDouble size={17} />{item.beds} Beds</span><span className="flex items-center gap-2"><Bath size={17} />{item.baths} Baths</span></div>}<div className="mt-5 flex items-center justify-between gap-3"><strong className="font-display text-lg text-primary">{item.price}</strong><Button variant="outline" aria-label={`Inquire about ${item.name}`} onClick={() => setChatOpen(true)}><MessageCircle size={16} />Inquire</Button></div></div>
             </article>)}
           </div>
           <p className="mt-7 text-center text-sm text-muted-foreground">Sample listings supplied for display. Please confirm current availability before visiting.</p>
@@ -162,13 +127,7 @@ function Index() {
 
       <footer className="bg-primary text-primary-foreground"><div className="mx-auto flex max-w-7xl flex-col gap-5 border-t border-hero-foreground/10 px-5 py-8 text-sm text-primary-foreground/55 sm:flex-row sm:items-center sm:justify-between lg:px-8"><span>© 2026 Ali Property Dealers. All rights reserved.</span><span>Islamabad, Pakistan</span></div></footer>
 
-      <Button variant="gold" size="icon" className="fixed bottom-5 right-5 z-40 size-14 rounded-full shadow-xl" onClick={() => setChatOpen(!chatOpen)} aria-label="Open property assistant"><MessageCircle size={24}/></Button>
-      {chatOpen && <div className="fixed bottom-22 right-4 z-50 flex h-[min(560px,calc(100vh-7rem))] w-[calc(100vw-2rem)] max-w-sm flex-col overflow-hidden rounded-md border border-border bg-background shadow-2xl">
-        <div className="flex items-center justify-between bg-primary p-4 text-primary-foreground"><div><div className="font-display font-semibold">Property Assistant</div><div className="mt-0.5 text-xs text-primary-foreground/60">Ali Property Dealers</div></div><Button variant="ghost" size="icon" className="text-primary-foreground" onClick={() => setChatOpen(false)} aria-label="Close assistant"><X size={20}/></Button></div>
-        <div className="flex-1 space-y-3 overflow-y-auto bg-muted p-4" aria-live="polite">{messages.map((item,index) => <div key={`${item.from}-${index}`} className={`max-w-[88%] rounded-md px-3 py-2.5 text-sm leading-6 ${item.from === "user" ? "ml-auto bg-primary text-primary-foreground" : "border border-border bg-background"}`}>{item.text}</div>)}</div>
-        <div className="flex gap-2 border-t border-border p-3"><Button variant="outline" className="flex-1 px-3" onClick={() => { setMessage("Show listings"); }}>Listings</Button><Button variant="outline" className="flex-1 px-3" onClick={() => { setMessage("Book a site visit"); }}>Site visit</Button></div>
-        <form onSubmit={submitChat} className="flex gap-2 border-t border-border p-3"><label className="sr-only" htmlFor="chat-message">Your message</label><input id="chat-message" value={message} onChange={(event) => setMessage(event.target.value)} maxLength={300} placeholder="Type your message…" className="min-w-0 flex-1 rounded-md border border-input bg-background px-3 text-base outline-none focus:ring-2 focus:ring-ring"/><Button size="icon" aria-label="Send message"><Send size={18}/></Button></form>
-      </div>}
+      <ChatWidget open={chatOpen} onOpenChange={setChatOpen} />
     </div>
   );
 }
