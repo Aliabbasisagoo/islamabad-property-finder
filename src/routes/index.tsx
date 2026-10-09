@@ -39,6 +39,25 @@ export const Route = createFileRoute("/")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    scripts: [{
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "RealEstateAgent",
+        name: agency.name,
+        telephone: agency.phone,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "Elysium Tower, Jinnah Avenue, Blue Area",
+          addressLocality: "Islamabad",
+          postalCode: "44000",
+          addressCountry: "PK",
+        },
+        openingHours: "Mo-Su 10:00-17:00",
+        areaServed: agency.areas.map((a) => `${a}, Islamabad`),
+        url: "https://islamabad-property-finder.lovable.app/",
+      }),
+    }],
   }),
   component: Index,
 });
