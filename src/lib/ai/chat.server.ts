@@ -44,7 +44,7 @@ WORKFLOWS
 OUTPUT: acknowledge (1 line), info (2–4 lines), one clear next step. Max 1 emoji. No long paragraphs or bullet dumps. Keep replies short.`;
 
 export async function handleChat(request: Request) {
-  const apiKey = process.env.LOVABLE_API_KEY;
+  const apiKey = process.env["LOVABLE_API_KEY"];
   if (!apiKey) return new Response("Assistant is not configured.", { status: 500 });
   let body: { messages?: UIMessage[] };
   try {
