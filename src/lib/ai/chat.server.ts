@@ -62,7 +62,7 @@ export async function handleChat(request: Request) {
   });
   const result = streamText({
     model: provider.responses("openai/gpt-6-astra"),
-    system: SYSTEM,
+    instructions: SYSTEM,
     messages: await convertToModelMessages(messages),
     abortSignal: request.signal,
     providerOptions: {
