@@ -63,6 +63,8 @@
   --color-gold-foreground: var(--gold-foreground);
   --color-hero-foreground: var(--hero-foreground);
   --color-navy-soft: var(--navy-soft);
+  --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-foreground: var(--whatsapp-foreground);
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Poppins", "Inter", ui-sans-serif, system-ui, sans-serif;
 }
